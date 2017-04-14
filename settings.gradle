@@ -1,0 +1,4 @@
+rootProject.name = 'com.jaredw.messagingapp'
+include 'MessagingApp'
+findProject(':MessagingApp')?.name = 'com.jaredw.messagingapp'
+
