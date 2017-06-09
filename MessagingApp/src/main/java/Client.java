@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -36,7 +37,7 @@ public class Client {
 
     private void run() throws IOException {
         String serverIP = "127.0.0.1"; // Hardcoded because why not.
-        Socket s = new Socket(serverIP, 9501);
+        Socket s = new Socket(serverIP, Server.portNumber);
         // Setup communication streams.
         incoming = new BufferedReader(new InputStreamReader(s.getInputStream()));
         outgoing = new PrintWriter(s.getOutputStream(), true);
@@ -53,6 +54,15 @@ public class Client {
                     break;
                 case Message:
                     chatWindow.append(incoming.readLine() + "\n");
+                    break;
+                case Login:
+                    chatWindow.append(incoming.readLine() + "\n");
+                    break;
+                case Command:
+                    chatWindow.append(incoming.readLine() + "\n");
+                    break;
+                case Quit: this.app.dispatchEvent(new WindowEvent(app, WindowEvent.WINDOW_CLOSING)); ; break;
+                default: chatWindow.append(incoming.readLine() + "\n");
                     break;
             }
         }
